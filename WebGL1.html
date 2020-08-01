@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>sample＿Shadow</title>
+  <title>WebGL中間</title>
 
   <!-- three.jsを読み込む(ローカル) -->
   <!-- <script src="./three.js"></script> -->
@@ -16,6 +16,7 @@
 
     var width = 800,
         height = 600;
+        let rot = 0;
 
     // レンダラーを作成
     var renderer = new THREE.WebGLRenderer();
@@ -30,9 +31,6 @@
 
 // カメラを作成(画角、縦横比、カメラからの距離前、後）
 var camera = new THREE.PerspectiveCamera(45, width / height, 10, 1000);
-　// カメラの座標
-　camera.position.set( 0, 10, 0);
-camera.lookAt(new THREE.Vector3(0, 0, -5));
 
 
 // 平面を作成
@@ -87,6 +85,14 @@ directionalLightS.position.set(-1, -1, 1);
 // 初回実行
 var update = function() {
   requestAnimationFrame(update);
+
+  rot += 0.5+;
+
+  const radian = (rot * Math.PI)/180:\;
+  camera.position.x = 1000 * Math.sin(radian);
+  camera.position.z = 1000 * Math.cos(radian);
+
+  camera.lookAt(new THREE.Vector3(0, 0, 0));
 
   // 箱を回転させる
   box.rotation.x += 0.01;
