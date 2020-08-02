@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>最終課題</title>
+
+  <!-- three.jsを読み込む(CDN) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/99/three.min.js"></script>
+
+ <script>
+  var init = function() {
+
+    var width = 960,
+        height = 540;
+
+  // レンダラーを作成
+   const renderer = new THREE.WebGLRenderer({
+         canvas: document.querySelector('#myCanvas')
+       });
+   renderer.setSize(width, height);
+
+  // シーンを作成
+   const scene = new THREE.Scene();
+
+  // カメラを作成
+   const camera = new THREE.PerspectiveCamera(35, width/height );
+
+  // グループを作成
+   const group = new THREE.Group();
+   scene.add(group);
+
+
+  // 図形共通テクスチャー
+   const texture = new THREE.TextureLoader().load('images/yuki2.png');
+   var texturemat = new THREE.MeshBasicMaterial({transparent:true});
+   texturemat.map = texture;
+   const geometry = new THREE.SphereGeometry(5, 32, 32);
+   const material = texturemat
+
+  //雪をつくる
+   for (let i = 0; i < 1000; i++) {　
+     const mesh = new THREE.Mesh(geometry, material);
+     mesh.position.x = (Math.random() - 0.5) * 650;
+     mesh.position.y = (Math.random() - 0.5) * 1000;
+     mesh.position.z = (Math.random() - 0.5) * 650;
+     // グループに格納する
+     group.add(mesh);
+   }
+
+
+
+    //地面を作成
+     const floor = new THREE.Mesh(
+       new THREE.PlaneGeometry(700, 700),
+       texturemat
+     );
+     floor.position.y = -60
+     floor.rotation.x = -Math.PI / 2;
+     scene.add(floor);
+
+
+   //雪だるまを作成
+    const head = new THREE.Mesh(
+      new THREE.SphereGeometry(40, 40, 20),
+      texturemat
+      );
+     head.position.x = 0;
+     head.position.y = 0;
+     head.position.z = 0;
+
+     const body = new THREE.Mesh(
+     new THREE.SphereGeometry(50, 50, 50),
+     texturemat
+      );
+     body.position.x = 0;
+     body.position.y = -60;
+     body.position.z = 0;
+
+     const hat = new THREE.Mesh(
+     new THREE.CylinderGeometry(25, 25, 40, 30),
+     new THREE.MeshLambertMaterial({ color: 0xffffff })
+     );
+     hat.position.x = 0;
+     hat.position.y = 50;
+     hat.position.z = 0;
+
+    const hatline = new THREE.Mesh(
+    new THREE.CylinderGeometry(26, 25, 20, 30),
+    new THREE.MeshLambertMaterial({ color: 0xe60033 })
+     );
+    hatline.position.x = 0;
+    hatline.position.y = 35;
+    hatline.position.z = 0;
+
+    const hat3 = new THREE.Mesh(
+    new THREE.CylinderGeometry(40, 40, 5, 30),
+    new THREE.MeshLambertMaterial({ color: 0xffffff })
+    );
+    hat3.position.x = 0;
+    hat3.position.y = 32;
+    hat3.position.z = 0;
+
+    const righteye = new THREE.Mesh(
+        new THREE.SphereGeometry(5, 25, 40),
+        new THREE.MeshToonMaterial({ color: 0x000000})
+    );
+    righteye.position.x = 15;
+    righteye.position.y = 18;
+    righteye.position.z = 30;
+
+    const lefteye = new THREE.Mesh(
+        new THREE.SphereGeometry(5, 10, 40),
+        new THREE.MeshToonMaterial({ color: 0x000000})
+    );
+    lefteye.position.x = -16;
+    lefteye.position.y = 18;
+    lefteye.position.z = 33;
+
+    const nose = new THREE.Mesh(
+        new THREE.SphereGeometry(5, 30, 20),
+        new THREE.MeshLambertMaterial({ color: 0xed9121 })
+    );
+    nose.position.x = 3;
+    nose.position.y = 10;
+    nose.position.z = 35;
+
+    //雪だるまのパーツをグループ化
+    const yukidaruma = new THREE.Group();
+    yukidaruma.add(hat,hatline,hat3,righteye,lefteye,nose,body,head);
+    scene.add(yukidaruma);
+
+
+  // 光源（環境光）
+  　const ambientLight = new THREE.AmbientLight(0xffffff, 1);
+    scene.add(ambientLight);
+
+  //半球光源
+   const light = new THREE.HemisphereLight(0x192f60, 0xfffafa, 1.0);
+   scene.add(light);
+
+    update();
+    // 初回実行
+    function update() {
+
+      // 角度に応じてカメラの位置を設定
+         camera.position.x = 600 * Math.sin(Date.now() / 3000);
+         camera.position.y = 400;
+         camera.position.z = 600 * Math.cos(Date.now() / 3000);
+         // 見つめる方向
+         camera.lookAt(new THREE.Vector3(0, 25, -15));
+
+      group.position.y -= 0.5;
+      renderer.render(scene, camera); //レンダリング
+      requestAnimationFrame(update);
+    }
+
+  }
+  window.addEventListener('load', init);
+
+ </script>
+</head>
+<body>
+  <canvas id = "myCanvas"></canvas>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>中間</title>
+
+  <!-- three.jsを読み込む(CDN) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/99/three.min.js"></script>
+  <script src="OrbitControls.js"></script>
+
+ <script>
+  var init = function() {
+
+    var width = 960,
+        height = 540;
+
+    // レンダラーを作成
+    var renderer = new THREE.WebGLRenderer({
+      canvas: document.querySelector('#myCanvas')
+    });
+    renderer.setSize(width, height);
+
+    // シーンを作成
+    const scene = new THREE.Scene();
+
+    // カメラを作成
+    const camera = new THREE.PerspectiveCamera(45, width / height);
+    camera.position.set(0, 0, 1000);
+
+    //カメラのコントローラを作成
+    const controls = new THREE.OrbitControls(camera);
+
+    //グループを作成
+    const group = new THREE.Group();
+    scene.add(group);
+
+    //正方形を作成
+    const geometry = new THREE.BoxGeometry(60, 60, 60);
+
+    //テクスチャー作成
+    var texture1 = new THREE.TextureLoader().load("images/スマイルフェイス2.png");
+    var texture1mat = new THREE.MeshBasicMaterial({transparent:true});
+    texture1mat.map = texture1;
+
+    var texture2 = new THREE.TextureLoader().load("images/ウインクフェイス2.png");
+    var texture2mat = new THREE.MeshBasicMaterial({transparent:true});
+    texture2mat.map = texture2;
+
+　　//for文を用いての正方形作成
+    j = -350
+    for(var i = 0; i < 8; i++){
+          var k = -420;
+          for(let l = 0; l <8; l++){
+            if(i==4 && l==7){
+              const mesh = new THREE.Mesh(geometry, texture2mat);
+              mesh.position.x = k;
+              mesh.position.y = j;
+              group.add(mesh);
+            }else{
+              const mesh = new THREE.Mesh(geometry, texture1mat);
+              mesh.position.x = k;
+              mesh.position.y = j;
+              group.add(mesh);
+            }
+            k +=80;
+          }
+            j += 80;
+        }
+
+    // 平行光源
+    var directionalLight1 = new THREE.DirectionalLight(0xffffff);
+    directionalLight1.position.set(1, 1, 1);
+    // シーンに追加
+    scene.add(directionalLight1);
+
+    update();
+    // 初回実行
+    function update() {
+      renderer.render(scene, camera); //レンダリング
+      requestAnimationFrame(update);
+    }
+
+  }
+  window.addEventListener('load', init);
+
+ </script>
+</head>
+<body>
+  <canvas id = "myCanvas"></canvas>
+</body>
+</html>
