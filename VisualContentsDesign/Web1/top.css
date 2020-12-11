@@ -1,10 +1,15 @@
+body{
+    background-color: #fffacd;
+}
+
 .menu{
   width:20%;
+  float: left;
 }
 
 .menu1 a, .menu2 a{
     display: block;
-    padding: 15px;
+    padding: 8px;
     text-decoration: none;
     color: #000;
 }
@@ -48,4 +53,15 @@ input {
 .menu2 a:hover, label:hover,.menu1 a:hover{
       text-decoration: none;
       background-color: #008b8b;
+}
+
+.toppage, .access{
+  width: 75%;
+  float: right;
+}
+
+.wrap{
+background-color: #037386;
+display:flex;
+flex-wrap:wrap;
 }
