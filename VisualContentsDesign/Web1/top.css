@@ -55,7 +55,7 @@ input {
       background-color: #008b8b;
 }
 
-.toppage, .access,.lunch{
+.toppage, .access, .lunch{
   width: 75%;
   float: right;
 }
