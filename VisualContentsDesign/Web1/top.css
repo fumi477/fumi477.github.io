@@ -7,14 +7,14 @@ body{
   float: left;
 }
 
-.menu1 a, .menu2 a{
+.menu1 a, .menu2 a, .menu_ a {
     display: block;
     padding: 8px;
     text-decoration: none;
     color: #000;
 }
 
-label,.menu2 a {
+label,.menu2 a, .menu_ a{
     display: block;
     margin: 0 0 4px 0;
     padding : 15px;
@@ -50,7 +50,7 @@ input {
     opacity: 1;
 }
 
-.menu2 a:hover, label:hover,.menu1 a:hover{
+.menu2 a:hover, label:hover,.menu1 a:hover, .menu_:hover{
       text-decoration: none;
       background-color: #008b8b;
 }
@@ -58,4 +58,9 @@ input {
 .toppage, .access, .lunch{
   width: 75%;
   float: right;
+}
+
+.lunch-img{
+  width: 85%;
+  height: auto;
 }
