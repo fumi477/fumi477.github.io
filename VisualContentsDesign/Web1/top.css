@@ -55,13 +55,7 @@ input {
       background-color: #008b8b;
 }
 
-.toppage, .access{
+.toppage, .access,.lunch{
   width: 75%;
   float: right;
-}
-
-.wrap{
-background-color: #037386;
-display:flex;
-flex-wrap:wrap;
 }
